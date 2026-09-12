@@ -9,7 +9,7 @@ the existing university Lost & Found process.
 - Backend: Node.js + Express
 - Database: Firebase Cloud Firestore
 - Authentication: Firebase Authentication
-- File Storage: Firebase Storage
+- File Storage: Cloudflare R2
 - Serverless Processing: Cloud Functions
 - Notifications: Firebase Cloud Messaging
 - Hosting: Firebase Hosting
