@@ -11,7 +11,7 @@ import Footer from "../components/Footer";
 export const LandingPage = () => {
   // SEO document title and meta tag updates
   useEffect(() => {
-    document.title = "UIU Lost & Found - Official Campus Portal";
+    document.title = "UIU Lost & Found";
   }, []);
 
   return (

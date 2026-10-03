@@ -71,9 +71,6 @@ const DashboardContent = ({ selectedItem, setSelectedItem }) => {
       <header className="dashboard-navbar">
         <div className="dashboard-nav-inner">
           <div className="nav-brand" style={{ cursor: "pointer" }} onClick={() => navigate("/")}>
-            <div className="brand-logo-icon">
-              <Shield size={22} strokeWidth={2.5} />
-            </div>
             <span className="brand-logo-text">
               <span className="text-orange">uiu</span> lost & found
             </span>
@@ -134,17 +131,13 @@ const DashboardContent = ({ selectedItem, setSelectedItem }) => {
           <div className="welcome-banner-card">
             <div className="welcome-banner-content">
               <div className="welcome-badge-row">
-                <Badge variant="primary">
-                  <CheckCircle2 size={13} style={{ color: "#ea580c" }} />
-                  <span>Verified UIU Account</span>
-                </Badge>
                 <span className={`role-badge ${getRoleBadgeColor(user?.role)}`}>
                   {user?.role ? user.role.toUpperCase() : "STUDENT"}
                 </span>
               </div>
 
               <h1 className="welcome-title">
-                Welcome back, {user?.name ? user.name.split(" ")[0] : "Student"}! 👋
+                Welcome back, {user?.name ? user.name.split(" ")[0] : "Student"}! 
               </h1>
 
               <p className="welcome-subtitle">
@@ -163,7 +156,6 @@ const DashboardContent = ({ selectedItem, setSelectedItem }) => {
               {(user?.role === "staff" || user?.role === "admin") && (
                 <>
                   <Button variant="gradient" size="md" onClick={() => navigate("/staff/dashboard")}>
-                    <Shield size={18} />
                     <span>Staff Dashboard</span>
                   </Button>
                   <Button variant="outline" size="md" onClick={handleReportFound}>

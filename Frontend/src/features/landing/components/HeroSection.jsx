@@ -67,10 +67,7 @@ export const HeroSection = () => {
     <section id="hero" className="hero-section bg-grid-pattern">
       <div className="hero-content">
         <div className="hero-left">
-          <Badge variant="primary" className="hero-badge">
-            <ShieldCheck size={14} style={{ color: "#ea580c" }} />
-            <span>Official UIU Campus Recovery Portal</span>
-          </Badge>
+          
 
           <h1 className="hero-title">
             Lost Something at UIU? <br />

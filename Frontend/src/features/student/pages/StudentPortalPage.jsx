@@ -101,7 +101,7 @@ export function StudentPortalPage() {
           <div className="portal-hero">
             <div className="portal-hero-left">
               <p className="portal-eyebrow">Student Portal</p>
-              <h1 className="portal-hero-title">Hello, {firstName}! 👋</h1>
+              <h1 className="portal-hero-title">Hello, {firstName}! </h1>
               <p className="portal-hero-sub">
                 Track your lost item reports, ownership claims and recovered items — all in one place.
               </p>

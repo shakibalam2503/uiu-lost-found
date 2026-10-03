@@ -10,6 +10,7 @@ const foundItemRoutes = require("./routes/found-item.routes");
 const matchRoutes = require("./routes/match.routes");
 const claimRoutes = require("./routes/claim.routes");
 const recoveryRoutes = require("./routes/recovery.routes");
+const foundTicketRoutes = require("./routes/found-ticket.routes");
 
 
 const app = express();
@@ -28,5 +29,7 @@ app.use("/api/found-items", foundItemRoutes);
 app.use("/api/matches", matchRoutes);
 app.use("/api/claims", claimRoutes);
 app.use("/api/recoveries", recoveryRoutes);
+app.use("/api/found-tickets", foundTicketRoutes);
+
 
 module.exports = app;
