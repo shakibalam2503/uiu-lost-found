@@ -11,6 +11,7 @@ import {
   Shield,
   LogOut,
   PackageCheck,
+  Ticket,
 } from "lucide-react";
 
 import useAuth from "../../auth/hooks/useAuth";
@@ -25,6 +26,7 @@ const TABS = [
   { id: "lost", label: "My Lost Items", icon: ClipboardList },
   { id: "claims", label: "My Claims", icon: ClipboardCheck },
   { id: "recoveries", label: "Recovered Items", icon: PackageCheck },
+  { id: "foundTickets", label: "Found Tickets", icon: Ticket },
 ];
 
 export function StudentPortalPage() {
@@ -126,6 +128,13 @@ export function StudentPortalPage() {
                 <div>
                   <span className="pstat-num">{myRecoveries.length}</span>
                   <span className="pstat-label">Items Recovered</span>
+                </div>
+              </div>
+              <div className="portal-stat-pill" onClick={() => navigate("/found-tickets/my")} style={{ cursor: "pointer" }}>
+                <Ticket size={18} className="pstat-icon" style={{ color: "#3b82f6" }} />
+                <div>
+                  <span className="pstat-num">Tickets</span>
+                  <span className="pstat-label">Found items</span>
                 </div>
               </div>
             </div>
@@ -275,6 +284,35 @@ export function StudentPortalPage() {
                   {myRecoveries.map((rec) => <RecoveryCard key={rec.id} recovery={rec} />)}
                 </div>
               )}
+            </div>
+          )}
+
+          {activeTab === "foundTickets" && (
+            <div className="portal-tab-content">
+              <div className="portal-tab-header">
+                <h2 className="portal-tab-title">
+                  <Ticket size={20} className="tab-title-icon" style={{ color: "#3b82f6" }} />
+                  My Found Item Tickets
+                </h2>
+                <div className="portal-tab-actions">
+                  <button type="button" className="btn-primary" onClick={() => navigate("/found-tickets/my")}>
+                    Open Tickets Portal
+                  </button>
+                  <button type="button" className="btn-primary" onClick={() => navigate("/found-tickets/submit")} style={{ marginLeft: '10px' }}>
+                    <PlusCircle size={15} /> Submit Found Item
+                  </button>
+                </div>
+              </div>
+              <p className="portal-rec-hint">
+                View your after-hours found item tickets and their current status.
+              </p>
+              
+              <div className="lost-item-empty">
+                <div className="lost-item-empty-icon"><Ticket size={48} /></div>
+                <h3>Found Item Tickets</h3>
+                <p>Click "Open Tickets Portal" to view your submitted tickets.</p>
+                <button className="btn-outline" onClick={() => navigate("/found-tickets/my")} style={{ marginTop: '16px' }}>View My Tickets</button>
+              </div>
             </div>
           )}
         </div>

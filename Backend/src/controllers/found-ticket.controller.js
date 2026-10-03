@@ -46,12 +46,12 @@ const createFoundTicket = async (req, res) => {
     let imageUrls = [];
 
     if (req.file) {
-      const imageKey = await uploadImage(
+      const uploadedImage = await uploadImage(
         req.file,
         "found-tickets"
       );
 
-      imageUrls.push(imageKey);
+      imageUrls.push(uploadedImage.key);
     }
 
     const now = FieldValue.serverTimestamp();

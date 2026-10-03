@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { PlusCircle, ClipboardCheck, Archive, ArrowRight } from "lucide-react";
+import { PlusCircle, ClipboardCheck, Archive, ArrowRight, Ticket } from "lucide-react";
 import Button from "../../../components/ui/button";
 
 export const StaffQuickActions = () => {
@@ -56,6 +56,22 @@ export const StaffQuickActions = () => {
             <span className="action-sub">Inspect completed item handovers</span>
           </div>
           <ArrowRight size={16} className="action-arrow" />
+        </button>
+
+        <button
+          type="button"
+          className="quick-action-btn secondary"
+          style={{ background: "linear-gradient(to right, #eff6ff, #dbeafe)", borderColor: "#bfdbfe" }}
+          onClick={() => navigate("/staff/found-tickets")}
+        >
+          <div className="quick-action-icon" style={{ backgroundColor: "#3b82f6", color: "#fff" }}>
+            <Ticket size={22} />
+          </div>
+          <div className="quick-action-text">
+            <span className="action-main" style={{ color: "#1e3a8a" }}>Review Found Tickets</span>
+            <span className="action-sub" style={{ color: "#3b82f6" }}>Process student after-hours items</span>
+          </div>
+          <ArrowRight size={16} className="action-arrow" style={{ color: "#3b82f6" }} />
         </button>
       </div>
     </div>

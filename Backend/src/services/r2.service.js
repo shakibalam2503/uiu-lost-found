@@ -42,9 +42,12 @@ const deleteImage = async (key) => {
 };
 
 const getSignedImageUrl = async (key) => {
+  if (!key) return null;
+  const actualKey = typeof key === 'object' && key.key ? key.key : key;
+
   const command = new GetObjectCommand({
     Bucket: R2_BUCKET_NAME,
-    Key: key,
+    Key: actualKey,
   });
 
   const signedUrl = await getSignedUrl(r2, command, {
