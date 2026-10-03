@@ -1,4 +1,4 @@
-const { onDocumentCreated } = require("firebase-functions/v2/firestore");
+const {onDocumentCreated} = require("firebase-functions/v2/firestore");
 const admin = require("firebase-admin");
 const {
   getFirestore,
@@ -94,8 +94,8 @@ const calculateMatchScore = (lostItem, foundItem) => {
 
 const createMatch = async (lostItem, foundItem) => {
   const score = calculateMatchScore(
-    lostItem,
-    foundItem
+      lostItem,
+      foundItem,
   );
 
   // Ignore weak matches
@@ -104,9 +104,9 @@ const createMatch = async (lostItem, foundItem) => {
   }
 
   const status =
-    score >= 80
-      ? "strong"
-      : "possible";
+    score >= 80 ?
+      "strong" :
+      "possible";
 
   /*
    * Deterministic document ID prevents
@@ -117,28 +117,28 @@ const createMatch = async (lostItem, foundItem) => {
     `${lostItem.id}_${foundItem.id}`;
 
   const matchRef = db
-    .collection("matches")
-    .doc(matchId);
+      .collection("matches")
+      .doc(matchId);
 
   await matchRef.set(
-    {
-      id: matchId,
+      {
+        id: matchId,
 
-      lostItemId: lostItem.id,
-      foundItemId: foundItem.id,
+        lostItemId: lostItem.id,
+        foundItemId: foundItem.id,
 
-      matchScore: score,
-      status,
+        matchScore: score,
+        status,
 
-      createdAt:
+        createdAt:
         FieldValue.serverTimestamp(),
 
-      updatedAt:
+        updatedAt:
         FieldValue.serverTimestamp(),
-    },
-    {
-      merge: true,
-    }
+      },
+      {
+        merge: true,
+      },
   );
 
   return {
@@ -155,44 +155,45 @@ const createMatch = async (lostItem, foundItem) => {
 // ----------------------------------------
 
 exports.matchFoundItem = onDocumentCreated(
-  "found_items/{foundItemId}",
-  async (event) => {
+    {
+      document: "found_items/{foundItemId}",
+      region: "asia-east2",
+    },
+    async (event) => {
+      const foundItem = event.data && event.data.data();
 
-    const foundItem = event.data?.data();
-
-    if (!foundItem) {
-      return;
-    }
-
-    // Use Firestore document ID.
-    // Don't depend on an "id" field inside the document.
-    foundItem.id = event.params.foundItemId;
-
-    const lostItemsSnapshot = await db
-      .collection("lost_items")
-      .where("status", "==", "lost")
-      .get();
-
-    let matchesCreated = 0;
-
-    for (const doc of lostItemsSnapshot.docs) {
-
-      const lostItem = doc.data();
-
-      const result = await createMatch(
-        lostItem,
-        foundItem
-      );
-
-      if (result) {
-        matchesCreated++;
+      if (!foundItem) {
+        return;
       }
-    }
 
-    console.log(
-      `Found item ${foundItem.id}: ${matchesCreated} match(es) created`
-    );
-  }
+      // Use Firestore document ID.
+      // Don't depend on an "id" field inside the document.
+      foundItem.id = event.params.foundItemId;
+
+      const lostItemsSnapshot = await db
+          .collection("lost_items")
+          .where("status", "==", "lost")
+          .get();
+
+      let matchesCreated = 0;
+
+      for (const doc of lostItemsSnapshot.docs) {
+        const lostItem = doc.data();
+
+        const result = await createMatch(
+            lostItem,
+            foundItem,
+        );
+
+        if (result) {
+          matchesCreated++;
+        }
+      }
+
+      console.log(
+          `Found item ${foundItem.id}: ${matchesCreated} match(es) created`,
+      );
+    },
 );
 
 
@@ -202,45 +203,44 @@ exports.matchFoundItem = onDocumentCreated(
 // ----------------------------------------
 
 exports.matchLostItem = onDocumentCreated(
-  "lost_items/{lostItemId}",
-  async (event) => {
+    {
+      document: "lost_items/{lostItemId}",
+      region: "asia-east2",
+    },
+    async (event) => {
+      const lostItem = event.data && event.data.data();
 
-    const lostItem = event.data?.data();
-
-    if (!lostItem) {
-      return;
-    }
-
-    // Use Firestore document ID.
-    lostItem.id = event.params.lostItemId;
-
-    const foundItemsSnapshot = await db
-      .collection("found_items")
-      .where("status", "==", "found")
-      .get();
-
-    let matchesCreated = 0;
-
-    for (const doc of foundItemsSnapshot.docs) {
-
-      const foundItem = doc.data();
-
-      foundItem.id = event.params
-        ? doc.id
-        : foundItem.id;
-
-      const result = await createMatch(
-        lostItem,
-        foundItem
-      );
-
-      if (result) {
-        matchesCreated++;
+      if (!lostItem) {
+        return;
       }
-    }
 
-    console.log(
-      `Lost item ${lostItem.id}: ${matchesCreated} match(es) created`
-    );
-  }
+      // Use Firestore document ID.
+      lostItem.id = event.params.lostItemId;
+
+      const foundItemsSnapshot = await db
+          .collection("found_items")
+          .where("status", "==", "found")
+          .get();
+
+      let matchesCreated = 0;
+
+      for (const doc of foundItemsSnapshot.docs) {
+        const foundItem = doc.data();
+
+        foundItem.id = doc.id;
+
+        const result = await createMatch(
+            lostItem,
+            foundItem,
+        );
+
+        if (result) {
+          matchesCreated++;
+        }
+      }
+
+      console.log(
+          `Lost item ${lostItem.id}: ${matchesCreated} match(es) created`,
+      );
+    },
 );

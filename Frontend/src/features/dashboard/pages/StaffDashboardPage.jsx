@@ -122,10 +122,6 @@ export const StaffDashboardPage = () => {
           {/* Welcome & Console Header */}
           <div className="staff-header-banner">
             <div className="staff-banner-content">
-              <div className="staff-banner-badge">
-                <ShieldCheck size={14} />
-                <span>Authorized Administrative Access</span>
-              </div>
               <h1 className="staff-banner-title">
                 Campus Security & Desk Operations Console
               </h1>

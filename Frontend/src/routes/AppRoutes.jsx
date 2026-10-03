@@ -29,6 +29,11 @@ import { RecoveryProvider } from "../features/recovery/recovery.context";
 import StudentPortalPage from "../features/student/pages/StudentPortalPage";
 import ProtectedRoute from "./ProtectedRoute";
 
+import SubmitFoundTicketPage from "../features/foundTickets/pages/SubmitFoundTicketPage";
+import MyFoundTicketsPage from "../features/foundTickets/pages/MyFoundTicketsPage";
+import StaffFoundTicketsPage from "../features/foundTickets/pages/StaffFoundTicketsPage";
+import FoundTicketDetailsPage from "../features/foundTickets/pages/FoundTicketDetailsPage";
+
 export const AppRoutes = () => {
   return (
     <LostItemsProvider>
@@ -135,6 +140,56 @@ export const AppRoutes = () => {
                 element={
                   <ProtectedRoute>
                     <FoundItemDetailsPage />
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Found Tickets — Student Submit */}
+              <Route
+                path="/found-tickets/submit"
+                element={
+                  <ProtectedRoute allowedRoles={["student", "faculty"]}>
+                    <SubmitFoundTicketPage />
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Found Tickets — My Tickets */}
+              <Route
+                path="/found-tickets/my"
+                element={
+                  <ProtectedRoute>
+                    <MyFoundTicketsPage />
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Found Tickets — Staff List */}
+              <Route
+                path="/staff/found-tickets"
+                element={
+                  <ProtectedRoute allowedRoles={["staff", "admin"]}>
+                    <StaffFoundTicketsPage />
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Found Tickets — Staff Details */}
+              <Route
+                path="/staff/found-tickets/:id"
+                element={
+                  <ProtectedRoute allowedRoles={["staff", "admin"]}>
+                    <FoundTicketDetailsPage />
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Found Tickets — Student Details */}
+              <Route
+                path="/found-tickets/:id"
+                element={
+                  <ProtectedRoute>
+                    <FoundTicketDetailsPage />
                   </ProtectedRoute>
                 }
               />
